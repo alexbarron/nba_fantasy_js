@@ -50,7 +50,4 @@ class Team < ActiveRecord::Base
     spot.destroy
   end
 
-  def self.update_scores
-
-  end
 end
