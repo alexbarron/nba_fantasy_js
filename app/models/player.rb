@@ -13,12 +13,13 @@ class Player < ActiveRecord::Base
 
   def update_stats
     stats_hash = self.get_player_stats
+    stats_hash[:salary] = self.get_player_salary
     self.update(stats_hash)
     self.calculate_score
   end
 
   def value
-    self.score / (self.salary / 1000000)
+    self.score / (self.salary.to_f / 1000000)
   end
 
   def self.most_valuable
@@ -47,6 +48,15 @@ class Player < ActiveRecord::Base
       games_played: stats_array[6], 
     }
     return stats_hash
+  end
+
+  def get_player_salary
+    url = self.player_url
+    page = Nokogiri::HTML(open(url))
+    contract = page.css("table#contract tr").last
+    contract_array = array_maker(contract)
+    salary = contract_array[2]
+    salary.delete("$ ,").to_i
   end
 
   def array_maker(element)
