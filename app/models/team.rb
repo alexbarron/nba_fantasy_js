@@ -1,7 +1,7 @@
 class Team < ActiveRecord::Base
   validates_presence_of :name, :user_id
   belongs_to :user
-  has_many :roster_spots
+  has_many :roster_spots, dependent: :destroy
   has_many :players, through: :roster_spots
 
   def owner_name
@@ -14,6 +14,22 @@ class Team < ActiveRecord::Base
 
   def efficiency
     self.score / (self.salary.to_f / 1000000) unless self.salary == 0
+  end
+
+  def starters
+    self.players.select do |player|
+      player if player.status(self) == "Starter"
+    end
+  end
+
+  def benchwarmers
+    self.players.select do |player|
+      player if player.status(self) == "Benched"
+    end
+  end
+
+  def status_sorted_roster
+    self.starters + self.benchwarmers
   end
 
   def add_player(player_id)
@@ -32,5 +48,9 @@ class Team < ActiveRecord::Base
     self.salary_remaining += spot.player.salary
     self.save
     spot.destroy
+  end
+
+  def self.update_scores
+
   end
 end

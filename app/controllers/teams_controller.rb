@@ -7,7 +7,7 @@ class TeamsController < ApplicationController
   end
 
   def show
-
+    @players = @team.status_sorted_roster
   end
 
   def new

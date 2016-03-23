@@ -16,4 +16,10 @@ class RosterSpotsController < ApplicationController
     redirect_to current_user.team, alert: "Player successfully dropped."
   end
 
+  def update
+    spot = current_user.team.roster_spots.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
+    response = spot.toggle
+    redirect_to current_user.team, alert: response
+  end
+
 end
