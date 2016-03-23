@@ -2,6 +2,7 @@
 <p>Score: <%= @team.score %></p>
 <p>Owned by: <%= @team.user.name %></p>
 <p>Salary: <%= @team.salary %></p>
+<p>Score Per Million: <%= @team.efficiency %></p>
 
 <% if !current_user.nil? && current_user == @team.user %>
   <%= link_to "Edit Team Info", edit_team_path(@team) %><br />

@@ -1,6 +1,7 @@
-<h1><%= @player.name %></h1>
+<h1><%= @player.name %>(<%= @player.position %>)</h1>
 <p>Score: <%= @player.score %></p>
 <p>Salary: <%= @player.salary %></p>
+<p>Score Per Million: <%= @player.value %></p>
 
 <% if !current_user.nil? %>
   <%= link_to "Edit Player Info", edit_player_path(@player) %><br />

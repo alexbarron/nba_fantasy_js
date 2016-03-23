@@ -12,6 +12,10 @@ class Team < ActiveRecord::Base
     70000000 - self.salary_remaining
   end
 
+  def efficiency
+    self.score / (self.salary / 1000000) unless self.salary == 0
+  end
+
   def add_player(player_id)
     player = Player.find(player_id)
     if player.salary < self.salary_remaining
@@ -22,5 +26,11 @@ class Team < ActiveRecord::Base
     else
       return "Sorry, you can't afford that player. Try dropping players to free up salary."
     end
+  end
+
+  def drop_player(spot)
+    self.salary_remaining += spot.player.salary
+    self.save
+    spot.destroy
   end
 end

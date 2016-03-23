@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @players = Player.all.sort {|a,b| b.score<=>a.score}
+    @players = Player.all.sort {|a,b| b.value<=>a.value}
   end
 
   def show
