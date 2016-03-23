@@ -300,6 +300,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  nokogiri
   omniauth-facebook
   pry
   rack_session_access

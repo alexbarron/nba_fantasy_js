@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Player < ActiveRecord::Base
   has_many :roster_spots
   has_many :teams, through: :roster_spots
@@ -7,6 +9,12 @@ class Player < ActiveRecord::Base
   def calculate_score
     self.score = points + (2 * (rebounds + assists + blocks + steals))
     self.save
+  end
+
+  def update_stats
+    stats_hash = self.get_player_stats
+    self.update(stats_hash)
+    self.calculate_score
   end
 
   def value
@@ -23,6 +31,26 @@ class Player < ActiveRecord::Base
     Player.all.min_by do |player|
       player.value
     end
+  end
+
+  def get_player_stats
+    url = self.player_url
+    page = Nokogiri::HTML(open(url))
+    season = page.css("table#totals tr.full_table").last
+    stats_array = array_maker(season)
+    stats_hash = {
+      points: stats_array[30], 
+      assists: stats_array[25], 
+      rebounds: stats_array[24], 
+      blocks: stats_array[27], 
+      steals: stats_array[26], 
+      games_played: stats_array[6], 
+    }
+    return stats_hash
+  end
+
+  def array_maker(element)
+    element.text.split("\n").map {|x| x.strip}
   end
 
   # How to construct (consider 2 different methods)
