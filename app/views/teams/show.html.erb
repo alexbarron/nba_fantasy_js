@@ -14,7 +14,7 @@
     <th>Position</th>
     <th>Score</th>  
     <th>Salary</th>
-    <% if @team.user == current_user %>
+    <% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
       <th>Toggle Status</th>
       <th>Drop Player</th>
     <% end %>
@@ -26,7 +26,7 @@
     <th><%= player.position %></th>
     <th><%= player.score %></th>
     <th><%= player.salary %></th>
-    <% if @team.user == current_user %>
+    <% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
       <th><%= link_to "Toggle Status", roster_spot_path(player_id: player.id, team_id: @team.id), method: :put, class: "btn btn-primary btn-sm" %></th>
       <th><%= link_to "Drop Player", roster_spot_path(player_id: player.id, team_id: @team.id), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-sm" %></th>
     <% end %>
@@ -39,7 +39,7 @@
 <% end %>
 
 
-<% if !current_user.nil? && current_user == @team.user %>
+<% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
   <%= link_to "Edit Team Info", edit_team_path(@team), class: "btn btn-primary" %><br /><br />
   <%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
 <% end %>

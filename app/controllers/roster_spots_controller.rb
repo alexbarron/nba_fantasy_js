@@ -11,15 +11,16 @@ class RosterSpotsController < ApplicationController
   end
 
   def destroy
-    spot = current_user.team.roster_spots.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
-    current_user.team.drop_player(spot)
-    redirect_to current_user.team, alert: "Player successfully dropped."
+    spot = RosterSpot.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
+    team = spot.team
+    team.drop_player(spot)
+    redirect_to team, alert: "Player successfully dropped."
   end
 
   def update
-    spot = current_user.team.roster_spots.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
+    spot = RosterSpot.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
     response = spot.toggle
-    redirect_to current_user.team, alert: response
+    redirect_to spot.team, alert: response
   end
 
 end
