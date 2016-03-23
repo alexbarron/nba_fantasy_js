@@ -1,0 +1,8 @@
+<h1><%= @player.name %></h1>
+<p>Score: <%= @player.score %></p>
+<p>Salary: <%= @player.salary %></p>
+
+<% if !current_user.nil? %>
+  <%= link_to "Edit Player Info", edit_player_path(@player) %><br />
+  <%= link_to "Delete Player", player_path(@player), method: :delete %>
+<% end %>

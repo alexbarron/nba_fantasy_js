@@ -1,0 +1,6 @@
+<%= form_for @player do |f| %>
+  <%= f.text_field :name %>
+  <%= f.select(:position, ["PG", "SG", "SF", "PF", "C"]) %>
+  <%= f.text_field :salary %>
+  <%= f.submit %>
+<% end %>

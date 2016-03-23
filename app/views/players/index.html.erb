@@ -1,0 +1,11 @@
+<h1>Player Rankings</h1>
+<%= link_to "Click here to create a player", new_player_path %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Score</th>  
+    <th>Salary</th>
+  </tr>
+      <%= render(@players) || "There are no players yet." %>
+</table>
