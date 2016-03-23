@@ -1,4 +1,4 @@
-<h1>Team Score Rankings</h1>
+<h1>Top 10 Most Efficient Teams</h1>
 <% if !current_user.nil? && current_user.team.nil? %>
   <%= link_to "Click here to create a team", new_team_path %>
 <% end %>
@@ -6,8 +6,9 @@
   <tr>
     <th>Team Name</th>
     <th>Owner</th>
-    <th>Score</th>  
+    <th>Score</th>
     <th>Salary</th>
+    <th>Efficiency(Score Per Million)</th>
   </tr>
       <%= render(@teams) || "There are no teams yet." %>
 </table>

@@ -12,8 +12,18 @@ class Team < ActiveRecord::Base
     70000000 - self.salary_remaining
   end
 
+  def self.most_efficient_teams
+    Team.all.max_by(10) do |team|
+      team.efficiency
+    end
+  end
+
   def efficiency
-    (self.score / (self.salary.to_f / 1000000)).round(2) unless self.salary == 0
+    if self.salary == 0 || self.salary.nil?
+      return 0
+    else
+      return (self.score / (self.salary.to_f / 1000000)).round(2)
+    end
   end
 
   def starters

@@ -34,6 +34,10 @@ class PlayersController < ApplicationController
     redirect_to players_path
   end
 
+  def most_valuable
+    @players = Player.most_valuable_players
+  end
+
   private
 
   def player_params

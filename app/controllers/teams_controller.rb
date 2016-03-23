@@ -35,6 +35,10 @@ class TeamsController < ApplicationController
     redirect_to teams_path
   end
 
+  def most_efficient
+    @teams = Team.most_efficient_teams
+  end
+
   private
 
   def team_params

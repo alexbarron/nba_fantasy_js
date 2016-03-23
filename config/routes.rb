@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :teams
 
+  get '/efficient', to: 'teams#most_efficient'
+  get '/valuable', to: 'players#most_valuable'
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   root 'teams#index'

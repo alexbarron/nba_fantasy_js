@@ -28,6 +28,12 @@ class Player < ActiveRecord::Base
     spot.starter ? "Starter" : "Benched"
   end
 
+  def self.most_valuable_players
+    Player.all.max_by(10) do |player|
+      player.value
+    end
+  end
+
   def self.most_valuable
     Player.all.max_by do |player|
       player.value
