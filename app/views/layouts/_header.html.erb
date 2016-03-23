@@ -1,9 +1,10 @@
-<nav>
-    <ul>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <ul class="nav navbar-nav">
         <li><%= link_to "Home", root_path %></li>
         <li><%= link_to "Teams", teams_path %></li>
         <li><%= link_to "Players", players_path %></li>
         <% if !!current_user %>
+          <li><%= link_to "My Team", team_path(current_user.team) unless current_user.team.nil? %></li>
           <li><%= link_to "Edit Account", edit_user_registration_path %></li>
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
         <% else %>

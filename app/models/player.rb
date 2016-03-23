@@ -20,7 +20,7 @@ class Player < ActiveRecord::Base
   end
 
   def value
-    self.score / (self.salary.to_f / 1000000)
+    (self.score / (self.salary.to_f / 1000000)).round(2)
   end
 
   def status(team)

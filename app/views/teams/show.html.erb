@@ -1,24 +1,23 @@
 <h1><%= @team.name %></h1>
-<p>Score: <%= @team.score %></p>
+<h3>Score: <%= @team.score %></h3>
 <p>Owned by: <%= @team.user.name %></p>
-<p>Salary: <%= @team.salary %></p>
+<p>Salary: <%= number_to_currency(@team.salary, precision: 0) %> (<%= number_to_currency(@team.salary_remaining, precision: 0) %> Remaining)</p>
 <p>Score Per Million: <%= @team.efficiency %></p>
-
-<% if !current_user.nil? && current_user == @team.user %>
-  <%= link_to "Edit Team Info", edit_team_path(@team) %><br />
-  <%= link_to "Delete Team", team_path(@team), method: :delete %>
-<% end %>
 
 <h3>Roster</h3>
 
 <% if !!@team.players %>
-<table>
+<table class="table table-striped table-condensed">
   <tr>
     <th>Name</th>
     <th>Status</th>
     <th>Position</th>
     <th>Score</th>  
     <th>Salary</th>
+    <% if @team.user == current_user %>
+      <th>Toggle Status</th>
+      <th>Drop Player</th>
+    <% end %>
   </tr>
   <% @players.each do |player| %>
   <tr>
@@ -28,8 +27,8 @@
     <th><%= player.score %></th>
     <th><%= player.salary %></th>
     <% if @team.user == current_user %>
-      <th><%= link_to "Toggle Starting/Benched", roster_spot_path(player_id: player.id, team_id: @team.id), method: :put %></th>
-      <th><%= link_to "Drop Player", roster_spot_path(player_id: player.id, team_id: @team.id), method: :delete %></th>
+      <th><%= link_to "Toggle Status", roster_spot_path(player_id: player.id, team_id: @team.id), method: :put, class: "btn btn-primary btn-sm" %></th>
+      <th><%= link_to "Drop Player", roster_spot_path(player_id: player.id, team_id: @team.id), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-sm" %></th>
     <% end %>
   </tr>
   <% end %>
@@ -37,4 +36,10 @@
 
 <% else %>
   <p>No players added yet.</p>
+<% end %>
+
+
+<% if !current_user.nil? && current_user == @team.user %>
+  <%= link_to "Edit Team Info", edit_team_path(@team), class: "btn btn-primary" %><br /><br />
+  <%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
 <% end %>

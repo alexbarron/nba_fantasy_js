@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
   end
 
   def efficiency
-    self.score / (self.salary.to_f / 1000000) unless self.salary == 0
+    (self.score / (self.salary.to_f / 1000000)).round(2) unless self.salary == 0
   end
 
   def starters
