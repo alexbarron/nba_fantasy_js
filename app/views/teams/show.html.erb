@@ -7,3 +7,30 @@
   <%= link_to "Edit Team Info", edit_team_path(@team) %><br />
   <%= link_to "Delete Team", team_path(@team), method: :delete %>
 <% end %>
+
+<h3>Roster</h3>
+
+<% if !!@team.players %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Score</th>  
+    <th>Salary</th>
+  </tr>
+  <% @team.players.each do |player| %>
+  <tr>
+    <th><%= link_to player.name, player %></th>
+    <th><%= player.position %></th>
+    <th><%= player.score %></th>
+    <th><%= player.salary %></th>
+    <% if @team.user == current_user %>
+      <th><%= link_to "Drop Player", roster_spot_path(player_id: player.id, team_id: @team.id), method: :delete %></th>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
+<% else %>
+  <p>No players added yet.</p>
+<% end %>

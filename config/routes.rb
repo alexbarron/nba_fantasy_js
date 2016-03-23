@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :roster_spots, only: [:create, :destroy]
+
   resources :players
 
   resources :teams

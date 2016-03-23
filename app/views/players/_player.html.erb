@@ -3,4 +3,7 @@
 <th><%= player.position %></th>
 <th><%= player.score %></th>
 <th><%= player.salary %></th>
+<% unless !current_user || current_user.team.players.include?(player) %>
+  <th><%= link_to "Add player to your team", roster_spots_path(player_id: player.id), method: :post %></th>
+<% end %>
 </tr>
