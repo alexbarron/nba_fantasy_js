@@ -1,0 +1,9 @@
+<h1><%= @team.name %></h1>
+<p>Score: <%= @team.score %></p>
+<p>Owned by: <%= @team.user.name %></p>
+<p>Salary: <%= @team.salary %></p>
+
+<% if !current_user.nil? && current_user == @team.user %>
+  <%= link_to "Edit Team Info", edit_team_path(@team) %><br />
+  <%= link_to "Delete Team", team_path(@team), method: :delete %>
+<% end %>

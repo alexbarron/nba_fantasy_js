@@ -1,0 +1,11 @@
+<h1>Team Rankings</h1>
+<%= link_to "Click here to create a team", new_team_path %>
+<table>
+  <tr>
+    <th>Team Name</th>
+    <th>Owner</th>
+    <th>Score</th>  
+    <th>Salary</th>
+  </tr>
+      <%= render(@teams) || "There are no teams yet." %>
+</table>
