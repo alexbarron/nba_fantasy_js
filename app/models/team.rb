@@ -7,7 +7,7 @@ class Team < ActiveRecord::Base
 
   def players_attributes=(players_attributes)
     players_attributes.values.each do |player_attribute|
-      if player_attribute[:player_url]
+      if player_attribute[:player_url].include?("http://www.basketball-reference.com/players")
         player = Player.find_or_create_by(player_url: player_attribute[:player_url])
         player.update_info
         unless self.players.include?(player) 

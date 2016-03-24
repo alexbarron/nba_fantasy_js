@@ -32,6 +32,12 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def self.highest_scoring_players
+    Player.all.max_by(10) do |player|
+      player.score
+    end
+  end
+
   def self.most_valuable
     Player.all.max_by do |player|
       player.value
