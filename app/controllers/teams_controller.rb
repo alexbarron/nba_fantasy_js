@@ -33,9 +33,7 @@ class TeamsController < ApplicationController
     @team = Team.new(team_params)
     @team.user = current_user
     if @team.save
-      @team.update_salaries
-      @team.set_lineup
-      redirect_to @team, notice: 'Successfully created team.'
+      redirect_to @team , notice: @team.team_setup
     else
       flash[:alert] = @team.errors.full_messages.first
       render :new

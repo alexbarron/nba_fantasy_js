@@ -67,6 +67,24 @@ class Team < ActiveRecord::Base
     self.update(salary_remaining: 70000000 - salary)
   end
 
+  def team_setup
+    update_salaries
+    response = enforce_salary_cap
+    set_lineup
+    response == 0 ? "Successfully created team" : "Created team but you couldn't afford all those players. #{response} players were auto-dropped."
+  end
+
+  def enforce_salary_cap
+    dropped = 0
+    while self.salary > 70000000
+      least_valuable = self.players.min_by {|player| player.value }
+      self.drop_player(least_valuable.id)
+      self.reload.update_salaries
+      dropped += 1
+    end
+    return dropped
+  end
+
   def bench_all
     self.players.each {|player| player.set_status(self, false)}
   end
