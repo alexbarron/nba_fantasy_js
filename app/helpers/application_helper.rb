@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def has_team_check?
-    !!current_user && !!current_user.team
+    !!current_user &&  !!current_user.team && current_user.team.valid?
   end
 
 end

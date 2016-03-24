@@ -32,9 +32,14 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     @team.user = current_user
-    @team.update_salaries
-    @team.save
-    redirect_to @team
+    if @team.save
+      @team.update_salaries
+      @team.set_lineup
+      redirect_to @team, notice: 'Successfully created team.'
+    else
+      flash[:alert] = @team.errors.full_messages
+      render :new
+    end
   end
 
   def edit

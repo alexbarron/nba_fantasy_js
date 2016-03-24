@@ -14,7 +14,7 @@
   <% end %>
   <br /><br />
 
-  <h4>Optiona: Add a new player to our site.</h4>
+  <h4>Optional: Add a new player to our site.</h4>
   <p>If you can't find the player you want, you can add one. <%= link_to "Click here to see Basketball Reference.", "http://www.basketball-reference.com/leagues/NBA_2016_totals.html" %> Find a player you want on your team, click through to their Basketball Reference profile, and then copy and paste their profile URL into the field below. We'll then automatically pull in all their information including name, position, and stats.</p>
   <%= f.fields_for :players, @team.players.build do |p| %>
     <%= p.text_field :player_url %>

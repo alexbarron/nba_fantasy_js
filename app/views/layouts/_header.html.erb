@@ -6,7 +6,7 @@
         <li><%= link_to "Leagues", leagues_path %></li>
         <li><%= link_to "Reports", reports_path %></li>
         <% if !!current_user %>
-          <li><%= link_to "My Team", team_path(current_user.team) unless current_user.team.nil? %></li>
+          <li><%= link_to "My Team", team_path(current_user.team) unless !has_team_check? %></li>
           <li><%= link_to "Edit Account", edit_user_registration_path %></li>
           <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
         <% else %>

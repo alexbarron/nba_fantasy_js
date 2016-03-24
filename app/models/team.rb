@@ -69,6 +69,20 @@ class Team < ActiveRecord::Base
     self.save
   end
 
+  def bench_all
+    self.players.each {|player| player.set_status(self, false)}
+  end
+
+  def set_lineup
+    self.bench_all
+    starting_lineup = self.players.max_by(5) do |player|
+      player.score
+    end
+    starting_lineup.each do |player|
+      player.set_status(self, true)
+    end
+  end
+
   def add_player(player_id)
     player = Player.find(player_id)
     if player.salary < self.salary_remaining

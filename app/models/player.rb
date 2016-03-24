@@ -37,6 +37,12 @@ class Player < ActiveRecord::Base
     spot.starter ? "Starter" : "Benched"
   end
 
+  def set_status(team, lineup_status)
+    spot = self.roster_spots.where(team_id: team.id).first
+    spot.starter = lineup_status
+    spot.save
+  end
+
   def self.most_valuable_players
     Player.all.max_by(10) do |player|
       player.value
