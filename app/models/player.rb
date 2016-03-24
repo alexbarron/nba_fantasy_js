@@ -9,12 +9,23 @@ class Player < ActiveRecord::Base
     self.save
   end
 
+  def calculate_new_score(hash)
+    hash[:points].to_i + (2 * (hash[:rebounds].to_i + hash[:assists].to_i + hash[:blocks].to_i + hash[:steals].to_i))
+  end
+
+  def self.update_all_players
+    Player.all.each {|player| player.update_info}
+  end
+
   def update_info
     old_score = self.score
     info_hash = self.get_player_info
-    self.update(info_hash)
-    self.calculate_score
-    self.update_teams_score(old_score, self.score)
+    new_score = self.calculate_new_score(info_hash)
+    if old_score != new_score
+      self.update(info_hash)
+      self.score = new_score
+      self.update_teams_score(old_score, self.score)
+    end
   end
 
   def value
@@ -61,14 +72,14 @@ class Player < ActiveRecord::Base
     season = page.css("table#totals tr.full_table").last
     stats_array = array_maker(season)
     info_hash = {
-      points: stats_array[30], 
-      assists: stats_array[25], 
-      rebounds: stats_array[24], 
-      blocks: stats_array[27], 
-      steals: stats_array[26], 
-      games_played: stats_array[6], 
+      points: stats_array[30].to_i, 
+      assists: stats_array[25].to_i, 
+      rebounds: stats_array[24].to_i, 
+      blocks: stats_array[27].to_i, 
+      steals: stats_array[26].to_i, 
+      games_played: stats_array[6].to_i, 
       position: stats_array[5],
-      salary: salary,
+      salary: salary.to_i,
       name: name
     }
     return info_hash

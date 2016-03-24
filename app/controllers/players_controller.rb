@@ -1,7 +1,7 @@
 class PlayersController < ApplicationController
   load_and_authorize_resource
   before_action :set_player, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :update_all]
 
   def index
     if params[:affordable] && @user = User.find(params[:user_id])
@@ -43,6 +43,15 @@ class PlayersController < ApplicationController
 
   def most_valuable
     @players = Player.most_valuable_players
+  end
+
+  def update_all
+    if current_user.admin?
+      Player.update_all_players
+      redirect_to players_path, alert: "Successfully updated all players."
+    else
+      redirect_to players_path, alert: "You're not allowed to do that."
+    end
   end
 
   private
