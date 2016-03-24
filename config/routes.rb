@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get '/efficient', to: 'teams#most_efficient'
   get '/valuable', to: 'players#most_valuable'
+  post '/join_league', to: 'teams#join_league'
+  post '/leave_league', to: 'teams#leave_league'
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 

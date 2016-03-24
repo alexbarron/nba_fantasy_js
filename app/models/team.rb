@@ -5,6 +5,11 @@ class Team < ActiveRecord::Base
   has_many :roster_spots, dependent: :destroy
   has_many :players, through: :roster_spots
 
+  def join_league(league_id)
+    self.league_id = league_id
+    self.save
+  end
+  
   def owner_name
     self.user.name
   end

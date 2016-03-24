@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   load_and_authorize_resource
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_team, only: [:show, :edit, :update, :destroy, :join_league]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :join_league]
 
   def index
     @teams = Team.all.sort {|a,b| b.score<=>a.score}
@@ -38,6 +38,18 @@ class TeamsController < ApplicationController
 
   def most_efficient
     @teams = Team.most_efficient_teams
+  end
+
+  def join_league
+    @team.league_id = params[:league_id]
+    @team.save
+    redirect_to @team.league, alert: "You've joined #{@team.league.name}."
+  end
+
+  def leave_league
+    @team.league_id = nil
+    @team.save
+    redirect_to @team, alert: "You've left the league."
   end
 
   private
