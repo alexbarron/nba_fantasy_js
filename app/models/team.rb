@@ -26,6 +26,10 @@ class Team < ActiveRecord::Base
     self.user.name
   end
 
+  def full_starters?
+    self.starters.count >= 5
+  end
+
   def salary
     70000000 - self.salary_remaining
   end
@@ -68,7 +72,7 @@ class Team < ActiveRecord::Base
   def add_player(player_id)
     player = Player.find(player_id)
     if player.salary < self.salary_remaining
-      RosterSpot.create(player_id: player_id, team_id: self.id)
+      RosterSpot.create(player_id: player_id, team_id: self.id, starter: !self.full_starters?) 
       self.update_salaries
       return "#{player.name} added to #{self.name}"
     else

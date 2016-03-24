@@ -8,7 +8,7 @@ class RosterSpot < ActiveRecord::Base
       self.save
       return "Benched #{self.player.name}"
     else
-      if self.team.starters.count >= 5
+      if self.team.full_starters?
         return "You already have 5 starters, bench a player before adding another starter."
       else
         self.starter = true
