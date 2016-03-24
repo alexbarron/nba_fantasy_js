@@ -1,6 +1,7 @@
 class Team < ActiveRecord::Base
   validates_presence_of :name, :user_id
   belongs_to :user
+  belongs_to :league
   has_many :roster_spots, dependent: :destroy
   has_many :players, through: :roster_spots
 

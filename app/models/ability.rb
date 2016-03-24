@@ -9,6 +9,8 @@ class Ability
       can :read, :all
       can :manage, Team, user_id: user.id
       can :manage, RosterSpot, team_id: user.team.id
+      can :create, League
+      can :update, League, user_id: user.id
     end
   end
 end
