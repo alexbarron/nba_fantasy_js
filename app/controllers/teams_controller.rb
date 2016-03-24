@@ -37,7 +37,7 @@ class TeamsController < ApplicationController
       @team.set_lineup
       redirect_to @team, notice: 'Successfully created team.'
     else
-      flash[:alert] = @team.errors.full_messages
+      flash[:alert] = @team.errors.full_messages.first
       render :new
     end
   end
@@ -59,13 +59,13 @@ class TeamsController < ApplicationController
   def join_league
     @team.league_id = params[:league_id]
     @team.save
-    redirect_to @team.league, alert: "You've joined #{@team.league.name}."
+    redirect_to @team.league, notice: "You've joined #{@team.league.name}."
   end
 
   def leave_league
     @team.league_id = nil
     @team.save
-    redirect_to @team, alert: "You've left the league."
+    redirect_to @team, notice: "You've left the league."
   end
 
   private

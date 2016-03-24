@@ -44,7 +44,7 @@ class PlayersController < ApplicationController
   def update_all
     if current_user.admin?
       Player.update_all_players
-      redirect_to players_path, alert: "Successfully updated all players."
+      redirect_to players_path, notice: "Successfully updated all players."
     else
       redirect_to players_path, alert: "You're not allowed to do that."
     end
