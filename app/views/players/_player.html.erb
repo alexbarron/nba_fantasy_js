@@ -5,7 +5,7 @@
   <td><%= number_to_currency(player.salary, precision: 0) %></td>
   <td><%= player.value %></td>
   <td>On <%= pluralize(player.teams.count, 'team') %></td>
-  <% if !!current_user %>
+  <% if has_team_check? %>
     <td><%= add_player_column(player) %></td>
   <% end %>
 </tr>

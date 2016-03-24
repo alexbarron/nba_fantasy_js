@@ -8,8 +8,8 @@ module PlayersHelper
     end
   end
 
-  def has_team_check
-    if !!current_user && !!current_user.team
+  def has_team_options
+    if has_team_check?
       render 'players/has_team_options'
     end
   end
@@ -19,4 +19,11 @@ module PlayersHelper
       render 'players/admin_player_options'
     end
   end
+
+  def display_salary_remaining
+    if has_team_check?
+      content_tag :h4, "You have #{number_to_currency(current_user.team.salary_remaining, precision: 0)} to add players."
+    end
+  end
+
 end

@@ -1,5 +1,3 @@
 <h1>Top 10 Most Valuable Players</h1>
-<% if !current_user.nil? && !current_user.team.nil? %>
-  <h4>You have <%= number_to_currency(current_user.team.salary_remaining, precision: 0) %> to add players.</h4>
-<% end %>
+<%= display_salary_remaining %>
 <%= render 'players/player_table' %>

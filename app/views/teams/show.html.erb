@@ -15,7 +15,7 @@
     <th>Position</th>
     <th>Score</th>  
     <th>Salary</th>
-    <% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
+    <% if has_team_check? || admin_check? %>
       <th>Toggle Status</th>
       <th>Drop Player</th>
     <% end %>
@@ -27,7 +27,7 @@
     <td><%= player.position %></td>
     <td><%= player.score %></td>
     <td><%= number_to_currency(player.salary, precision: 0) %></td>
-    <% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
+    <% if has_team_check? || admin_check?  %>
       <td><%= link_to "Toggle Status", roster_spot_path(spot), method: :put, class: "btn btn-primary btn-sm" %></td>
       <td><%= link_to "Drop Player", roster_spot_path(spot), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger btn-sm" %></td>
     <% end %>
