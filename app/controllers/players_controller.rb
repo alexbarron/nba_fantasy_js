@@ -22,9 +22,13 @@ class PlayersController < ApplicationController
   end
 
   def create
-    @player = Player.new(player_params)
-    @player.save
-    redirect_to @player
+    @player = Player.find_or_create_by(player_params)
+    if @player.save
+      redirect_to @player
+    else
+      flash[:alert] = @player.errors.full_messages.first
+      render :new
+    end
   end
 
   def edit
@@ -53,7 +57,7 @@ class PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:name, :salary, :position)
+    params.require(:player).permit(:player_url)
   end
 
   def set_player

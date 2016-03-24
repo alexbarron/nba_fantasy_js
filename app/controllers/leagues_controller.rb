@@ -18,8 +18,12 @@ class LeaguesController < ApplicationController
   def create
     @league = League.create(league_params)
     @league.user = current_user
-    @league.save
-    redirect_to @league
+    if @league.save
+      redirect_to @league
+    else
+      flash[:alert] = @league.errors.full_messages.first
+      render :new
+    end
   end
 
   def edit
