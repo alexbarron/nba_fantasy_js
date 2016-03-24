@@ -1,7 +1,7 @@
-<tr>
-<th><%= link_to team.name, team %></th>
-<th><%= team.owner_name %></th>
-<th><%= team.score %></th>
-<th><%= number_to_currency(team.salary, precision: 0) %></th>
-<th><%= team.efficiency %></th>
-</tr>
+      <tr>
+        <td><%= link_to team.name, team %></td>
+        <td><%= team.owner_name %></td>
+        <td><%= team.score %></td>
+        <td><%= number_to_currency(team.salary, precision: 0) %></td>
+        <td><%= team.efficiency %></td>
+      </tr>

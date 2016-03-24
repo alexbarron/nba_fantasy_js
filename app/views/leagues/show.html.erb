@@ -10,8 +10,17 @@
     <th>Owner</th>
     <th>Score</th>  
     <th>Salary</th>
+    <th>Efficiency(Score Per Million)</th>
   </tr>
-      <%= render(@teams) || "There are no teams yet." %>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= link_to team.name, team %></td>
+        <td><%= team.owner_name %></td>
+        <td><%= team.score %></td>
+        <td><%= number_to_currency(team.salary, precision: 0) %></td>
+        <td><%= team.efficiency %></td>
+      </tr>
+    <% end %>
 </table>
 
 <% else %>
