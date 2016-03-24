@@ -20,10 +20,9 @@ class Player < ActiveRecord::Base
   def update_info
     old_score = self.score
     info_hash = self.get_player_info
-    new_score = self.calculate_new_score(info_hash)
-    if old_score != new_score
+    info_hash[:score] = self.calculate_new_score(info_hash)
+    if old_score != info_hash[:score]
       self.update(info_hash)
-      self.score = new_score
       self.update_teams_score(old_score, self.score)
     end
   end
@@ -110,13 +109,14 @@ class Player < ActiveRecord::Base
 
   def update_teams_score(old_score, new_score)
     difference = new_score - old_score
+    score = 0
     self.roster_spots.each do |roster_spot|
       if roster_spot.starter
-        roster_spot.team.score += difference
+        score = roster_spot.team.score + difference
       else
-        roster_spot.team.score += (difference / 2)
+        score = roster_spot.team.score + (difference / 2)
       end
-      roster_spot.team.save
+      roster_spot.team.update(score: score)
     end
   end
 

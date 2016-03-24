@@ -18,8 +18,7 @@ class Team < ActiveRecord::Base
   end 
 
   def join_league(league_id)
-    self.league_id = league_id
-    self.save
+    self.update(league_id: league_id)
   end
   
   def owner_name
@@ -31,7 +30,7 @@ class Team < ActiveRecord::Base
   end
 
   def salary
-    70000000 - self.salary_remaining
+    self.players.inject(0){|sum, player| sum += player.salary}
   end
 
   def self.most_efficient_teams
@@ -65,8 +64,7 @@ class Team < ActiveRecord::Base
   end
 
   def update_salaries
-    self.salary_remaining = 70000000 - self.players.inject(0){|sum, player| sum += player.salary}
-    self.save
+    self.update(salary_remaining: 70000000 - salary)
   end
 
   def bench_all
@@ -86,8 +84,8 @@ class Team < ActiveRecord::Base
   def add_player(player_id)
     player = Player.find(player_id)
     if player.salary < self.salary_remaining
-      RosterSpot.create(player_id: player_id, team_id: self.id, starter: !self.full_starters?) 
-      self.update_salaries
+      RosterSpot.create(player_id: player_id, team_id: self.id, starter: !self.full_starters?)
+      self.reload.update_salaries
       return "#{player.name} added to #{self.name}"
     else
       return "Sorry, you can't afford that player. Try dropping players to free up salary."
