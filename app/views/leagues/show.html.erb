@@ -1,5 +1,7 @@
 <h1><%= @league.name %></h1>
 
+<%= link_to "Create Team In This League", new_league_team_path(@league) %>
+
 <% if !current_user.nil? && !!current_user.team %>
   <% if @league == current_user.team.league %>
     <%= link_to "Leave League", leave_league_path(id: current_user.team), method: :post, class: "btn btn-danger btn-sm", data: {confirm: "Are you sure?"} %>

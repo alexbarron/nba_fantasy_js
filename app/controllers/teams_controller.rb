@@ -1,18 +1,31 @@
 class TeamsController < ApplicationController
   load_and_authorize_resource
   before_action :set_team, only: [:show, :edit, :update, :destroy, :join_league]
+  before_action :check_user_has_team, only: [:new, :create]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy, :join_league]
 
   def index
-    @teams = Team.all.sort {|a,b| b.score<=>a.score}
+    if params[:league_id]
+      @league = League.find(params[:league_id])
+      @teams = @league.teams.sort {|a,b| b.score<=>a.score}
+    else
+      @teams = Team.all.sort {|a,b| b.score<=>a.score}
+    end
   end
 
   def show
-    @players = @team.status_sorted_roster
+    if params[:league_id]
+      @team = League.find(params[:league_id]).teams.find(params[:id])
+    end
+    @players = @team.status_sorted_roster    
   end
 
   def new
-    @team = Team.new
+    if params[:league_id] && !League.exists?(params[:league_id])
+      redirect_to leagues_path, alert: "League not found."
+    else
+      @team = Team.new(league_id: params[:league_id])
+    end
   end
 
   def create
@@ -55,10 +68,16 @@ class TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:name, :user_id)
+    params.require(:team).permit(:name, :user_id, :league_id)
   end
 
   def set_team
     @team = Team.find(params[:id])
+  end
+
+  def check_user_has_team
+    if !!current_user.team
+      redirect_to current_user.team, alert: "You must delete this team before creating another."
+    end
   end
 end

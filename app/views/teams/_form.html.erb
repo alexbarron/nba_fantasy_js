@@ -1,4 +1,5 @@
 <%= form_for @team do |f| %>
   <%= f.text_field :name %>
+  <%= f.hidden_field :league_id %>
   <%= f.submit %>
 <% end %>
