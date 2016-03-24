@@ -17,7 +17,8 @@ class TeamsController < ApplicationController
     if params[:league_id]
       @team = League.find(params[:league_id]).teams.find(params[:id])
     end
-    @players = @team.status_sorted_roster    
+    @players = @team.status_sorted_roster
+    @spots = @players.collect {|player| player.roster_spots.where(team_id: @team.id).first}
   end
 
   def new
