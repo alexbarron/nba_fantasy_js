@@ -51,10 +51,6 @@ class TeamsController < ApplicationController
     redirect_to teams_path
   end
 
-  def most_efficient
-    @teams = Team.most_efficient_teams
-  end
-
   def join_league
     @team.league_id = params[:league_id]
     @team.save

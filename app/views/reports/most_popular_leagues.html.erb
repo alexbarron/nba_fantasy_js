@@ -1,0 +1,12 @@
+<h1>Top 10 Most Popular Leagues</h1>
+<% if !current_user.nil? %>
+  <%= link_to "Click here to create a league", new_league_path %>
+<% end %>
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>League Name</th>
+    <th>Commissioner</th>
+    <th>Teams</th>  
+  </tr>
+      <%= render(@leagues) || "There are no leagues yet." %>
+</table>

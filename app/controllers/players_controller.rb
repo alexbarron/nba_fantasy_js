@@ -41,10 +41,6 @@ class PlayersController < ApplicationController
     redirect_to players_path
   end
 
-  def most_valuable
-    @players = Player.most_valuable_players
-  end
-
   def update_all
     if current_user.admin?
       Player.update_all_players

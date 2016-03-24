@@ -1,0 +1,18 @@
+<h1>Top 10 Most Popular Players</h1>
+<% if !current_user.nil? && !current_user.team.nil? %>
+  <h4>You have <%= number_to_currency(current_user.team.salary_remaining, precision: 0) %> to add players.</h4>
+<% end %>
+<table class="table table-striped table-condensed">
+  <tr>
+    <th>Name</th>
+    <th>Position</th>
+    <th>Score</th>  
+    <th>Salary</th>
+    <th>Value(Score Per Million)</th>
+    <th>Num of Teams</th>
+    <% if !!current_user %>
+      <th>Add Player</th>
+    <% end %>
+  </tr>
+      <%= render(@players) || "There are no players yet." %>
+</table>

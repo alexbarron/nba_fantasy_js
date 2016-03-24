@@ -4,9 +4,12 @@
   <td><%= player.score %></td>
   <td><%= number_to_currency(player.salary, precision: 0) %></td>
   <td><%= player.value %></td>
-  <% if !current_user || current_user.team.players.include?(player) %>
-    <td>This player is on your team</td>
-  <% else %>
-    <td><%= link_to "Add Player", roster_spots_path(player_id: player.id), method: :post, class: "btn btn-success btn-xs" %></td>
+  <td>On <%= pluralize(player.teams.count, 'team') %></td>
+  <% if !!current_user %>
+    <% if current_user.team.players.include?(player) %>
+      <td>This player is on your team</td>
+    <% else %>
+      <td><%= link_to "Add Player", roster_spots_path(player_id: player.id), method: :post, class: "btn btn-success btn-xs" %></td>
+    <% end %>
   <% end %>
 </tr>

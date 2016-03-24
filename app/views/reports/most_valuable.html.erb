@@ -9,7 +9,10 @@
     <th>Score</th>  
     <th>Salary</th>
     <th>Value(Score Per Million)</th>
-    <th>Add Player</th>
+    <th>Num of Teams</th>
+    <% if !!current_user %>
+      <th>Add Player</th>
+    <% end %>
   </tr>
       <%= render(@players) || "There are no players yet." %>
 </table>

@@ -1,6 +1,7 @@
 <h1>Players</h1>
-<%= link_to "Show All", players_path, class: "btn btn-primary btn-sm" %>
+
 <% if !current_user.nil? && !current_user.team.nil? %>
+  <%= link_to "Show All", players_path, class: "btn btn-primary btn-sm" %>
   <%= link_to "Show Players You Can Afford", players_path(affordable: true, user_id: current_user.id), class: "btn btn-primary btn-sm" %>
   <%= link_to "Show Available Players", players_path(available: true, user_id: current_user.id), class: "btn btn-primary btn-sm" %>
   <h4>You have <%= number_to_currency(current_user.team.salary_remaining, precision: 0) %> to add players.</h4>
@@ -16,6 +17,7 @@
     <th>Score</th>  
     <th>Salary</th>
     <th>Value(Score Per Million)</th>
+    <th>Num of Teams</th>
     <th>Add Player</th>
   </tr>
       <%= render(@players) || "There are no players yet." %>

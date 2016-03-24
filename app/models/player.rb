@@ -43,6 +43,12 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def self.most_popular_players
+    Player.all.max_by(10) do |player|
+      player.teams.count
+    end
+  end
+
   def self.highest_scoring_players
     Player.all.max_by(10) do |player|
       player.score
