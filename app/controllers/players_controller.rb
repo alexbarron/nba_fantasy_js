@@ -4,7 +4,13 @@ class PlayersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @players = Player.all.sort {|a,b| b.score<=>a.score}
+    if params[:affordable] && @user = User.find(params[:user_id])
+      @players = Player.where("salary < ?", @user.team.salary_remaining).sort {|a,b| b.score<=>a.score}
+    elsif params[:available] && @user = User.find(params[:user_id])
+      @players = Player.all.sort {|a,b| b.score<=>a.score} - @user.team.players
+    else
+      @players = Player.all.sort {|a,b| b.score<=>a.score}
+    end
   end
 
   def show
