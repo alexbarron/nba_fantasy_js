@@ -6,10 +6,6 @@
   <td><%= player.value %></td>
   <td>On <%= pluralize(player.teams.count, 'team') %></td>
   <% if !!current_user %>
-    <% if current_user.team.players.include?(player) %>
-      <td>This player is on your team</td>
-    <% else %>
-      <td><%= link_to "Add Player", roster_spots_path(player_id: player.id), method: :post, class: "btn btn-success btn-xs" %></td>
-    <% end %>
+    <td><%= add_player_column(player) %></td>
   <% end %>
 </tr>

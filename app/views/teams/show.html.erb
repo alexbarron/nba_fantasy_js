@@ -39,8 +39,4 @@
   <p>No players added yet.</p>
 <% end %>
 
-
-<% if !current_user.nil? && (current_user == @team.user || current_user.admin?) %>
-  <%= link_to "Edit Team Info", edit_team_path(@team), class: "btn btn-primary" %><br /><br />
-  <%= link_to "Delete Team", team_path(@team), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
-<% end %>
+<%= permitted_links(@team) %>

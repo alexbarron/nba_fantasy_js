@@ -14,7 +14,4 @@
 
 <%= render "teams/team_table" %>
 
-<% if !current_user.nil? && (current_user == @league.user || current_user.admin?) %>
-  <%= link_to "Edit League Info", edit_league_path(@league), class: "btn btn-primary" %><br /><br />
-  <%= link_to "Delete League", league_path(@league), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger" %>
-<% end %>
+<%= permitted_links(@league) %>

@@ -1,13 +1,5 @@
 <h1>Players</h1>
 
-<% if !current_user.nil? && !current_user.team.nil? %>
-  <%= link_to "Show All", players_path, class: "btn btn-primary btn-sm" %>
-  <%= link_to "Show Players You Can Afford", players_path(affordable: true, user_id: current_user.id), class: "btn btn-primary btn-sm" %>
-  <%= link_to "Show Available Players", players_path(available: true, user_id: current_user.id), class: "btn btn-primary btn-sm" %>
-  <h4>You have <%= number_to_currency(current_user.team.salary_remaining, precision: 0) %> to add players.</h4>
-<% end %>
-<% if !current_user.nil? && current_user.admin? %>
-  <%= link_to "Create Player", new_player_path, class: "btn btn-sm btn-primary" %>
-  <%= link_to "Update All Players", update_all_players_path, class: "btn btn-sm btn-primary", method: :post %>
-<% end %>
+<%= has_team_check %>
+<%= admin_options %>
 <%= render "player_table" %>
