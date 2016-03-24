@@ -31,6 +31,7 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(team_params)
     @team.user = current_user
+    @team.update_salaries
     @team.save
     redirect_to @team
   end

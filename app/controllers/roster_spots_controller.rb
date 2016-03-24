@@ -12,9 +12,9 @@ class RosterSpotsController < ApplicationController
   end
 
   def destroy
-    spot = RosterSpot.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
-    team = spot.team
-    team.drop_player(spot)
+    #spot = RosterSpot.where("player_id = ? AND team_id = ?", params[:player_id], params[:team_id]).first
+    team = Team.find(params[:team_id])
+    team.drop_player(params[:player_id])
     redirect_to team, alert: "Player successfully dropped."
   end
 
