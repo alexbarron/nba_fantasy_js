@@ -32,7 +32,7 @@ team_urls = [
       player_url = "http://www.basketball-reference.com" + player.css("a").first["href"]
 
       new_player = Player.find_or_create_by({name: name, position: position, player_url: player_url})
-      new_player.update_stats
+      new_player.update_info
     end
   end
 

@@ -3,18 +3,16 @@ require 'open-uri'
 class Player < ActiveRecord::Base
   has_many :roster_spots, dependent: :destroy
   has_many :teams, through: :roster_spots
-  validates :position, inclusion: { in: %w(PG SG SF PF C)}
-  validates_presence_of :name, :position
 
   def calculate_score
     self.score = points + (2 * (rebounds + assists + blocks + steals))
     self.save
   end
 
-  def update_stats
+  def update_info
     old_score = self.score
-    stats_hash = self.get_player_stats_and_salary
-    self.update(stats_hash)
+    info_hash = self.get_player_info
+    self.update(info_hash)
     self.calculate_score
     self.update_teams_score(old_score, self.score)
   end
@@ -46,31 +44,31 @@ class Player < ActiveRecord::Base
     end
   end
 
-  def get_player_stats_and_salary
+  def get_player_info
     url = self.player_url
     page = Nokogiri::HTML(open(url))
-    contract = page.css("table#contract tr").last
-    contract_array = array_maker(contract)
-    salary = contract_array[2]
-    salary = salary.delete("$ ,").to_i
+
+    name = page.css("h1").first.text
+    
+    salary = get_salary(page)
 
     season = page.css("table#totals tr.full_table").last
     stats_array = array_maker(season)
-    stats_hash = {
+    info_hash = {
       points: stats_array[30], 
       assists: stats_array[25], 
       rebounds: stats_array[24], 
       blocks: stats_array[27], 
       steals: stats_array[26], 
       games_played: stats_array[6], 
-      salary: salary
+      position: stats_array[5],
+      salary: salary,
+      name: name
     }
-    return stats_hash
+    return info_hash
   end
 
-  def get_player_salary
-    url = self.player_url
-    page = Nokogiri::HTML(open(url))
+  def get_salary(page)
     contract = page.css("table#contract tr").last
     contract_array = array_maker(contract)
     salary = contract_array[2]

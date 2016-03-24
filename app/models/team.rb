@@ -5,6 +5,18 @@ class Team < ActiveRecord::Base
   has_many :roster_spots, dependent: :destroy
   has_many :players, through: :roster_spots
 
+  def players_attributes=(players_attributes)
+    players_attributes.values.each do |player_attribute|
+      if player_attribute[:player_url]
+        player = Player.find_or_create_by(player_url: player_attribute[:player_url])
+        player.update_info
+        unless self.players.include?(player) 
+          self.players << player
+        end
+      end  
+    end   
+  end 
+
   def join_league(league_id)
     self.league_id = league_id
     self.save

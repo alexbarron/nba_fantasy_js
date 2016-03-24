@@ -1,5 +1,17 @@
 <%= form_for @team do |f| %>
-  <%= f.text_field :name %>
   <%= f.hidden_field :league_id %>
+
+  <%= f.label :name, "Team Name" %>
+  <%= f.text_field :name %>
+
+  Why don't you add 3 players to get started?
+
+  <%= f.collection_check_boxes :player_ids, Player.all, :id, :name, label: "Players" %>
+  <br /><br />
+  <%= f.fields_for :players, @team.players.build do |p| %>
+    <%= f.label :name, "Player URL" %>
+    <%= p.text_field :player_url %>
+  <% end %>
+  <br /><br />
   <%= f.submit %>
 <% end %>
