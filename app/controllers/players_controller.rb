@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
 
   def index
     if params[:affordable] && @user = User.find(params[:user_id])
-      @players = Player.where("salary < ?", @user.team.salary_remaining).sort {|a,b| b.score<=>a.score}
+      @players = Player.where("salary < ?", @user.team.salary_remaining).sort {|a,b| b.score<=>a.score} - @user.team.players
     elsif params[:available] && @user = User.find(params[:user_id])
       @players = Player.all.sort {|a,b| b.score<=>a.score} - @user.team.players
     else
