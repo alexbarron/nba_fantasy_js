@@ -19,6 +19,11 @@ class TeamsController < ApplicationController
     end
     @players = @team.status_sorted_roster
     @spots = @players.collect {|player| player.roster_spots.where(team_id: @team.id).first}
+
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @team}
+    end
   end
 
   def new

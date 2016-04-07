@@ -1,3 +1,5 @@
+<div id="rosterCell"></div>
+
 <table class="table table-striped table-condensed">
   <tr>
     <th>Team Name</th>
@@ -5,6 +7,41 @@
     <th>Score</th>
     <th>Salary</th>
     <th>Efficiency(Score Per Million)</th>
+    <th></th>
   </tr>
       <%= render(@teams) || "There are no teams yet." %>
 </table>
+
+
+<% content_for :js do %>
+  <script type="text/javascript">
+
+  $(document).on('page:load', loadRoster)
+
+  function loadRoster(){
+    $(".js-roster").on("click", function() {
+      var id = $(this).data("id");
+
+      $.get('/teams/' + id + '.json', function(data){
+        var players = data["team"]["players"];
+        var rosterHTML = '<ol>'
+        $.each(players, function(i, player){
+          rosterHTML += '<li>' + player.name + '</li>';
+        })
+        rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + id + '">Hide Roster</a>';
+        $('#rosterCell-' + id).html(rosterHTML);
+        hideRoster();
+      })
+    });
+  };
+
+  function hideRoster(){
+    $(".js-hide-roster").on("click", function() {
+      var id = $(this).data("id");
+      $('#rosterCell-' + id).html('<a href="#" class="js-roster btn btn-primary btn-xs" data-id="' + id + '">See Roster</a>');
+      loadRoster();
+    });
+  };
+
+  </script>
+<% end %>

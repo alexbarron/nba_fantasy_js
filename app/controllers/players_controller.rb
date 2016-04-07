@@ -11,6 +11,11 @@ class PlayersController < ApplicationController
     else
       @players = Player.all.sort {|a,b| b.score<=>a.score}
     end
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @players}
+    end
   end
 
   def show
