@@ -28,9 +28,11 @@
 
 <%= permitted_links(@player) %>
 
-<% content_for :js do %>
-  <script type="text/javascript">
-  $(function () {
+<script type="text/javascript">
+  $(document).ready(setListeners);
+  $(document).on('page:load', setListeners);
+
+  function setListeners(){
     $(".js-next").on("click", function() {
       loadAnotherPlayer("next");
     });
@@ -38,7 +40,7 @@
     $(".js-previous").on("click", function() {
       loadAnotherPlayer("previous");
     });
-  });
+  }
 
   function loadAnotherPlayer(direction){
     var id;
@@ -73,5 +75,4 @@
       $("#games_played").text(data["player"]["games_played"]);
     });
   }
-  </script>
-<% end %>
+</script>

@@ -1,5 +1,3 @@
-<div id="rosterCell"></div>
-
 <table class="table table-striped table-condensed">
   <tr>
     <th>Team Name</th>
@@ -12,11 +10,9 @@
       <%= render(@teams) || "There are no teams yet." %>
 </table>
 
-
-<% content_for :js do %>
-  <script type="text/javascript">
-
-  $(document).on('page:load', loadRoster)
+<script type="text/javascript">
+  $(document).ready(loadRoster);
+  $(document).on('page:load', loadRoster);
 
   function loadRoster(){
     $(".js-roster").on("click", function() {
@@ -43,5 +39,4 @@
     });
   };
 
-  </script>
-<% end %>
+</script>
