@@ -22,7 +22,7 @@
         var players = data["team"]["players"];
         var rosterHTML = '<ol>'
         $.each(players, function(i, player){
-          rosterHTML += '<li>' + player.name + '</li>';
+          rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
         })
         rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + id + '">Hide Roster</a>';
         $('#rosterCell-' + id).html(rosterHTML);

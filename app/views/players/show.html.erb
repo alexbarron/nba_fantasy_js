@@ -34,15 +34,15 @@
 
   function setListeners(){
     $(".js-next").on("click", function() {
-      loadAnotherPlayer("next");
+      loadPlayer("next");
     });
 
     $(".js-previous").on("click", function() {
-      loadAnotherPlayer("previous");
+      loadPlayer("previous");
     });
   }
 
-  function loadAnotherPlayer(direction){
+  function loadPlayer(direction){
     var id;
     if(direction === "next"){
       id = parseInt($(".js-next").attr("data-id")) + 1;
