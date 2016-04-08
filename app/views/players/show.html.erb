@@ -51,28 +51,28 @@
     }
     
     $.get("/players/" + id + ".json", function(data) {
-      $(".js-next").attr("data-id", data["player"]["id"]);
-      $(".js-previous").attr("data-id", data["player"]["id"]);
+      $(".js-next").attr("data-id", data.player.id);
+      $(".js-previous").attr("data-id", data.player.id);
 
       // Set top information
-      $("h1").text(data["player"]["name"] + '(' + data["player"]["position"] + ')');
-      $("h3").text('Score: ' + data["player"]["score"]);
-      $("#salary").text('Salary: $' + data["player"]["salary"].toLocaleString());
-      $("#value").text('Score Per Million: ' + data["player"]["value"]);
+      $("h1").text(data.player.name + '(' + data.player.position + ')');
+      $("h3").text('Score: ' + data.player.score);
+      $("#salary").text('Salary: $' + data.player.salary.toLocaleString());
+      $("#value").text('Score Per Million: ' + data.player.value);
 
-      if(data["player"]["team_count"] === 1){
-        $("#team_count").text('Num of Teams: ' + data["player"]["team_count"] + " team");
+      if(data.player.team_count === 1){
+        $("#team_count").text('Num of Teams: ' + data.player.team_count + " team");
       } else {
-        $("#team_count").text('Num of Teams: ' + data["player"]["team_count"] + " teams");
+        $("#team_count").text('Num of Teams: ' + data.player.team_count + " teams");
       }
 
       // Set stats
-      $("#points").text(data["player"]["points"]);
-      $("#assists").text(data["player"]["assists"]);
-      $("#rebounds").text(data["player"]["rebounds"]);
-      $("#blocks").text(data["player"]["blocks"]);
-      $("#steals").text(data["player"]["steals"]);
-      $("#games_played").text(data["player"]["games_played"]);
+      $("#points").text(data.player.points);
+      $("#assists").text(data.player.assists);
+      $("#rebounds").text(data.player.rebounds);
+      $("#blocks").text(data.player.blocks);
+      $("#steals").text(data.player.steals);
+      $("#games_played").text(data.player.games_played);
     });
   }
 </script>

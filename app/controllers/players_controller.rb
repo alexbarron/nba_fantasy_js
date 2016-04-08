@@ -32,7 +32,7 @@ class PlayersController < ApplicationController
   def create
     @player = Player.find_or_create_by(player_params)
     if @player.save
-      redirect_to @player
+      render json: @player, status: 201
     else
       flash[:alert] = @player.errors.full_messages.first
       render :new
