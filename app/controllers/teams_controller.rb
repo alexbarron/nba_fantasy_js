@@ -26,16 +26,15 @@ class TeamsController < ApplicationController
   end
 
   def new
-    if params[:league_id] && !League.exists?(params[:league_id])
-      redirect_to leagues_path, alert: "League not found."
+    if params[:league_id] && @league = League.find(params[:league_id])
+      @team = @league.teams.build
     else
-      @team = Team.new(league_id: params[:league_id])
+      @team = Team.new
     end
   end
 
   def create
-    @team = Team.new(team_params)
-    @team.user = current_user
+    @team = current_user.build_team(team_params)
     if @team.save
       redirect_to @team , notice: @team.team_setup
     else

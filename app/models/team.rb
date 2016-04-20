@@ -10,9 +10,7 @@ class Team < ActiveRecord::Base
       if player_attribute[:player_url].include?("http://www.basketball-reference.com/players")
         player = Player.find_or_create_by(player_url: player_attribute[:player_url])
         player.update_info
-        unless self.players.include?(player) 
-          self.players << player
-        end
+        self.roster_spots.build(player_id: player.id) unless self.players.include?(player)
       end  
     end   
   end 
@@ -89,9 +87,7 @@ class Team < ActiveRecord::Base
 
   def set_lineup
     self.bench_all
-    starting_lineup = self.players.max_by(5) do |player|
-      player.score
-    end
+    starting_lineup = self.players.order(score: :desc).limit(5)
     starting_lineup.each do |player|
       player.set_status(self, true)
     end

@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   
   resources :leagues
   resources :leagues, only: [:show] do
-    resources :teams, only: [:show, :index, :new]
+    resources :teams, only: [:show, :index, :new, :create]
   end
 
   resources :roster_spots, only: [:create, :destroy, :update]
