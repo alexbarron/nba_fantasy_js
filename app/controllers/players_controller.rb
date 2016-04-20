@@ -4,11 +4,11 @@ class PlayersController < ApplicationController
 
   def index
     if params[:affordable] && @user = current_user
-      @players = Player.where("salary < ?", @user.team.salary_remaining).sort {|a,b| b.score<=>a.score} - @user.team.players
+      @players = @user.team.affordable
     elsif params[:available] && @user = current_user
-      @players = Player.all.sort {|a,b| b.score<=>a.score} - @user.team.players
+      @players = @user.team.available
     else
-      @players = Player.all.sort {|a,b| b.score<=>a.score}
+      @players = Player.order(score: :desc)
     end
 
     respond_to do |format|

@@ -116,4 +116,12 @@ class Team < ActiveRecord::Base
     self.update_salaries
   end
 
+  def affordable
+    Player.where("salary < ?", self.salary_remaining).order(score: :desc) - self.players
+  end
+
+  def available
+    Player.all.order(score: :desc) - self.players
+  end
+
 end

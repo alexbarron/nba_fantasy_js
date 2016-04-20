@@ -6,9 +6,9 @@ class TeamsController < ApplicationController
   def index
     if params[:league_id]
       @league = League.find(params[:league_id])
-      @teams = @league.teams.sort {|a,b| b.score<=>a.score}
+      @teams = @league.teams.order(score: :desc)
     else
-      @teams = Team.all.sort {|a,b| b.score<=>a.score}
+      @teams = Team.order(score: :desc)
     end
   end
 

@@ -7,7 +7,7 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    @teams = @league.teams.sort {|a,b| b.score<=>a.score}
+    @teams = @league.teams.order(score: :desc)
   end
 
   def new

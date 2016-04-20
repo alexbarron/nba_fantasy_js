@@ -57,9 +57,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.highest_scoring_players
-    Player.all.max_by(10) do |player|
-      player.score
-    end
+    self.order(score: :desc).limit(10)
   end
 
   def self.most_valuable

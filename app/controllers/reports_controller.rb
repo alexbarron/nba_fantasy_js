@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
   def index
-
   end
   
   def most_valuable
