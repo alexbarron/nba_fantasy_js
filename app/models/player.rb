@@ -16,7 +16,9 @@ class Player < ActiveRecord::Base
   end
 
   def self.update_all_players
-    Player.all.each {|player| player.update_info}
+    Player.all.find_each(batch_size: 10) do |player|
+      player.update_info
+    end
   end
 
   def update_info
