@@ -34,12 +34,10 @@ class Team < ActiveRecord::Base
   end
 
   def self.most_efficient_teams
-    Team.all.max_by(10) do |team|
-      team.efficiency
-    end
+    Team.order(efficiency: :desc).limit(10)
   end
 
-  def efficiency
+  def calculate_efficiency
     if self.salary == 0 || self.salary.nil?
       return 0
     else

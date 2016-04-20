@@ -116,7 +116,7 @@ class Player < ActiveRecord::Base
       else
         score = roster_spot.team.score + (difference / 2)
       end
-      roster_spot.team.update(score: score)
+      roster_spot.team.update(score: score, efficiency: roster_spot.team.calculate_efficiency)
     end
   end
 

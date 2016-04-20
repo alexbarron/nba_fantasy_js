@@ -3,6 +3,6 @@
         <td><%= team.owner_name %></td>
         <td><%= team.score %></td>
         <td><%= number_to_currency(team.salary, precision: 0) %></td>
-        <td><%= team.efficiency %></td>
+        <td><%= team.efficiency.round(2) %></td>
         <td id="rosterCell-<%=team.id%>"><a href="#" class="js-roster btn btn-primary btn-xs" data-id="<%= team.id %>">See Roster</a></td>
       </tr>
