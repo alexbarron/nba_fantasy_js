@@ -25,12 +25,13 @@ class Player < ActiveRecord::Base
     info_hash[:score] = self.calculate_new_score(info_hash)
     if old_score != info_hash[:score]
       self.update(info_hash)
+      self.set_value
       self.update_teams_score(old_score, self.score)
     end
   end
 
-  def value
-    (self.score / (self.salary.to_f / 1000000)).round(2)
+  def set_value
+    self.update(value:(self.score / (self.salary.to_f / 1000000)).round(2))
   end
 
   def status(team)
@@ -45,9 +46,7 @@ class Player < ActiveRecord::Base
   end
 
   def self.most_valuable_players
-    Player.all.max_by(10) do |player|
-      player.value
-    end
+    self.order(value: :desc).limit(10)
   end
 
   def self.most_popular_players
@@ -61,15 +60,11 @@ class Player < ActiveRecord::Base
   end
 
   def self.most_valuable
-    Player.all.max_by do |player|
-      player.value
-    end
+    self.order(value: :desc).limit(1)
   end
 
   def self.least_valuable
-    Player.all.min_by do |player|
-      player.value
-    end
+    self.order(value: :asc).limit(1)
   end
 
   def get_player_info

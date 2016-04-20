@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160420180811) do
+ActiveRecord::Schema.define(version: 20160420183026) do
 
   create_table "leagues", force: :cascade do |t|
     t.string   "name"
@@ -23,17 +23,18 @@ ActiveRecord::Schema.define(version: 20160420180811) do
   create_table "players", force: :cascade do |t|
     t.string   "name"
     t.string   "position"
-    t.integer  "score",        default: 0
-    t.integer  "salary",       default: 525093
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "points",       default: 0
-    t.integer  "rebounds",     default: 0
-    t.integer  "assists",      default: 0
-    t.integer  "blocks",       default: 0
-    t.integer  "steals",       default: 0
-    t.integer  "games_played", default: 0
+    t.integer  "score",                      default: 0
+    t.integer  "salary",                     default: 525093
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.integer  "points",                     default: 0
+    t.integer  "rebounds",                   default: 0
+    t.integer  "assists",                    default: 0
+    t.integer  "blocks",                     default: 0
+    t.integer  "steals",                     default: 0
+    t.integer  "games_played",               default: 0
     t.string   "player_url"
+    t.decimal  "value",        precision: 5, default: 0
   end
 
   create_table "roster_spots", force: :cascade do |t|
@@ -46,13 +47,13 @@ ActiveRecord::Schema.define(version: 20160420180811) do
 
   create_table "teams", force: :cascade do |t|
     t.string   "name"
-    t.integer  "score",            default: 0
-    t.integer  "salary_remaining", default: 70000000
+    t.integer  "score",                          default: 0
+    t.integer  "salary_remaining",               default: 70000000
     t.integer  "user_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.integer  "league_id"
-    t.decimal  "efficiency",       default: 0.0
+    t.decimal  "efficiency",       precision: 5, default: 0
   end
 
   create_table "users", force: :cascade do |t|
