@@ -1,5 +1,5 @@
-<a href="#" class="js-previous btn btn-primary" data-id="<%=@player.id%>">Load Previous Player</a>
-<a href="#" class="js-next btn btn-primary" data-id="<%=@player.id%>">Load Next Player</a>
+<a href="#" class="js-previous btn btn-primary" data-id="<%= @player.prev ? @player.prev.id : 0 %>">Load Previous Player</a>
+<a href="#" class="js-next btn btn-primary" data-id="<%= @player.next ? @player.next.id : 0 %>">Load Next Player</a>
 
 <h1><%= @player.name %>(<%= @player.position %>)</h1>
 <h3>Score: <%= @player.score %></h3>
@@ -45,14 +45,19 @@
   function loadPlayer(direction){
     var id;
     if(direction === "next"){
-      id = parseInt($(".js-next").attr("data-id")) + 1;
+      id = parseInt($(".js-next").attr("data-id"));
     } else if (direction === "previous"){
-      id = parseInt($(".js-previous").attr("data-id")) - 1;
+      id = parseInt($(".js-previous").attr("data-id"));
+    }
+
+    if (id === 0){
+      alert("No more players that way!");
+      return;
     }
     
     $.get("/players/" + id + ".json", function(data) {
-      $(".js-next").attr("data-id", data.player.id);
-      $(".js-previous").attr("data-id", data.player.id);
+      $(".js-next").attr("data-id", data.player.next_id);
+      $(".js-previous").attr("data-id", data.player.prev_id);
 
       // Set top information
       $("h1").text(data.player.name + '(' + data.player.position + ')');

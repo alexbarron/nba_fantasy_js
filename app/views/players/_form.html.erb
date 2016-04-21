@@ -1,5 +1,5 @@
 <%= form_for @player do |f| %>
   <%= f.label :player_url, "Player Profile URL" %>
-  <%= f.text_field :player_url %>
+  <%= f.text_field :player_url, id: "playerUrl" %>
   <%= f.submit class: 'btn btn-success' %>
 <% end %>

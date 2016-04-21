@@ -117,4 +117,12 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def next
+    Player.where("id > ?", self.id).first
+  end
+
+  def prev
+    Player.where("id < ?", self.id).last
+  end
+
 end
