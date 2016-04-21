@@ -4,7 +4,14 @@ class Player < ActiveRecord::Base
   has_many :roster_spots, dependent: :destroy
   has_many :teams, through: :roster_spots
   validates_presence_of :player_url
+  validate :valid_url
   after_save :update_info
+
+  def valid_url
+    if !self.player_url.include?("http://www.basketball-reference.com/players")
+      errors.add(:player_url, "is not a valid Basketball Reference Player URL")
+    end
+  end
 
   def calculate_score
     self.score = points + (2 * (rebounds + assists + blocks + steals))

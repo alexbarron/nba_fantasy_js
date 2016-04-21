@@ -29,7 +29,7 @@ class PlayersController < ApplicationController
   end
 
   def create
-    @player = Player.find_or_create_by(player_params)
+    @player = Player.find_or_initialize_by(player_params)
     if @player.save
       render json: @player, status: 201
     else
