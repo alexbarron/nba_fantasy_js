@@ -64,6 +64,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    chartjs-ror (2.2.0)
+      rails (>= 3.1)
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
@@ -303,6 +305,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   cancancan
   capybara
+  chartjs-ror
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise

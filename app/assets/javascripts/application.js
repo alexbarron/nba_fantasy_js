@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require Chart
+//= require excanvas
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets

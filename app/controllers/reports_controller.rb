@@ -17,4 +17,8 @@ class ReportsController < ApplicationController
   def most_popular_leagues
     @leagues = League.most_popular_leagues
   end
+
+  def highest_scoring_players
+    @players = Player.highest_scoring_players
+  end
 end

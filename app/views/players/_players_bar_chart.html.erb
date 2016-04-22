@@ -1,0 +1,17 @@
+<% data = {
+    labels: [@players[0].name, @players[1].name, @players[2].name, @players[3].name, @players[4].name, @players[5].name, @players[6].name, @players[7].name, @players[8].name, @players[9].name],
+    datasets: [
+        {
+            label: "Score Per Million Dollars",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [@players[0].value, @players[1].value, @players[2].value, @players[3].value, @players[4].value, @players[5].value, @players[6].value, @players[7].value, @players[8].value, @players[9].value]
+        }
+    ]
+} %>
+<% options = {} %>
+<%= bar_chart data, options %>

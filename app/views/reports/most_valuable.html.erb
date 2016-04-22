@@ -1,3 +1,11 @@
 <h1>Top 10 Most Valuable Players</h1>
 <%= display_salary_remaining %>
-<%= render 'players/player_table' %>
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'players/player_table' %>
+  </div>
+  <div class="col-md-4">
+    <%= render 'players/players_bar_chart' %>
+  </div>
+</div>
+
