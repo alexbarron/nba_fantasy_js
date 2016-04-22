@@ -54,8 +54,8 @@ class PlayersController < ApplicationController
 
   def update_all
     if current_user.admin?
-      Player.update_all_players
-      redirect_to players_path, notice: "Successfully updated all players."
+      PlayersWorker.perform_async
+      redirect_to players_path, notice: "Updating all players in the background."
     else
       redirect_to players_path, alert: "You're not allowed to do that."
     end

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'jquery-turbolinks'
 gem 'chartjs-ror'
+gem 'sidekiq'
 gem 'active_model_serializers'
 gem 'rails', '4.2'
 gem 'bootstrap-sass', '~> 3.3.6'
