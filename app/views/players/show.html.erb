@@ -56,28 +56,37 @@
     }
     
     $.get("/players/" + id + ".json", function(data) {
-      $(".js-next").attr("data-id", data.player.next_id);
-      $(".js-previous").attr("data-id", data.player.prev_id);
+      currentPlayer = new Player(data.player);
+      currentPlayer.setInfo();
+    });
+  }
+
+  function Player(info){
+    this.info = info;
+  };
+
+  Player.prototype.setInfo = function(){
+      $(".js-next").attr("data-id", this.info.next_id);
+      $(".js-previous").attr("data-id", this.info.prev_id);
 
       // Set top information
-      $("h1").text(data.player.name + '(' + data.player.position + ')');
-      $("h3").text('Score: ' + data.player.score);
-      $("#salary").text('Salary: $' + data.player.salary.toLocaleString());
-      $("#value").text('Score Per Million: ' + data.player.value);
+      $("h1").text(this.info.name + '(' + this.info.position + ')');
+      $("h3").text('Score: ' + this.info.score);
+      $("#salary").text('Salary: $' + this.info.salary.toLocaleString());
+      $("#value").text('Score Per Million: ' + this.info.value);
 
-      if(data.player.team_count === 1){
-        $("#team_count").text('Num of Teams: ' + data.player.team_count + " team");
+      if(this.info.team_count === 1){
+        $("#team_count").text('Num of Teams: ' + this.info.team_count + " team");
       } else {
-        $("#team_count").text('Num of Teams: ' + data.player.team_count + " teams");
+        $("#team_count").text('Num of Teams: ' + this.info.team_count + " teams");
       }
 
       // Set stats
-      $("#points").text(data.player.points);
-      $("#assists").text(data.player.assists);
-      $("#rebounds").text(data.player.rebounds);
-      $("#blocks").text(data.player.blocks);
-      $("#steals").text(data.player.steals);
-      $("#games_played").text(data.player.games_played);
-    });
+      $("#points").text(this.info.points);
+      $("#assists").text(this.info.assists);
+      $("#rebounds").text(this.info.rebounds);
+      $("#blocks").text(this.info.blocks);
+      $("#steals").text(this.info.steals);
+      $("#games_played").text(this.info.games_played);
   }
 </script>
