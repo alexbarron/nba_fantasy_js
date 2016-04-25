@@ -1,4 +1,6 @@
-$(function(){
+$(document).ready(bindPlayerListeners);
+
+function bindPlayerListeners(){
   $(".js-next-player").on("click", function() {
     loadPlayer("next");
   });
@@ -27,7 +29,7 @@ $(function(){
         $("#playerUrl").val("");
       })
   });
-})
+}
 
 function Player(info){
   for(var key in info){
