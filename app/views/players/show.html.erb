@@ -1,5 +1,6 @@
-<a href="#" class="js-previous btn btn-primary" data-id="<%= @player.prev ? @player.prev.id : 0 %>">Load Previous Player</a>
-<a href="#" class="js-next btn btn-primary" data-id="<%= @player.next ? @player.next.id : 0 %>">Load Next Player</a>
+
+<%= link_to "Load Previous Player", player_path(@player.prev || 0), :class => "js-previous btn btn-primary", remote: true, :data => {:id => @player.prev ? @player.prev.id : 0} %>
+<%= link_to "Load Next Player", player_path(@player.next || 0), :class => "js-next btn btn-primary", remote: true, :data => {:id => @player.next ? @player.next.id : 0} %>
 
 <h1><%= @player.name %>(<%= @player.position %>)</h1>
 <h3>Score: <%= @player.score %></h3>
@@ -53,39 +54,45 @@
       alert("No more players that way!");
       return;
     }
-    
-    $.get("/players/" + id + ".json", function(data) {
+
+    $.get("/players/" + id + ".json")
+      .done(function(data) {
       currentPlayer = new Player(data.player);
       currentPlayer.setInfo();
+      history.pushState({}, '', "/players/" + id);      
     });
   }
 
   function Player(info){
-    this.info = info;
+    for(var key in info){
+      this[key] = info[key];
+    }
   };
 
   Player.prototype.setInfo = function(){
-      $(".js-next").attr("data-id", this.info.next_id);
-      $(".js-previous").attr("data-id", this.info.prev_id);
+      $(".js-next").attr("data-id", this.next_id);
+      $(".js-previous").attr("data-id", this.prev_id);
+      $(".js-next").attr("href", "/players/" + this.next_id);
+      $(".js-previous").attr("href", "/players/" + this.prev_id);
 
       // Set top information
-      $("h1").text(this.info.name + '(' + this.info.position + ')');
-      $("h3").text('Score: ' + this.info.score);
-      $("#salary").text('Salary: $' + this.info.salary.toLocaleString());
-      $("#value").text('Score Per Million: ' + this.info.value);
+      $("h1").text(this.name + '(' + this.position + ')');
+      $("h3").text('Score: ' + this.score);
+      $("#salary").text('Salary: $' + this.salary.toLocaleString());
+      $("#value").text('Score Per Million: ' + this.value);
 
-      if(this.info.team_count === 1){
-        $("#team_count").text('Num of Teams: ' + this.info.team_count + " team");
+      if(this.team_count === 1){
+        $("#team_count").text('Num of Teams: ' + this.team_count + " team");
       } else {
-        $("#team_count").text('Num of Teams: ' + this.info.team_count + " teams");
+        $("#team_count").text('Num of Teams: ' + this.team_count + " teams");
       }
 
       // Set stats
-      $("#points").text(this.info.points);
-      $("#assists").text(this.info.assists);
-      $("#rebounds").text(this.info.rebounds);
-      $("#blocks").text(this.info.blocks);
-      $("#steals").text(this.info.steals);
-      $("#games_played").text(this.info.games_played);
+      $("#points").text(this.points);
+      $("#assists").text(this.assists);
+      $("#rebounds").text(this.rebounds);
+      $("#blocks").text(this.blocks);
+      $("#steals").text(this.steals);
+      $("#games_played").text(this.games_played);
   }
 </script>

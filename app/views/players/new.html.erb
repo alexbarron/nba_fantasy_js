@@ -39,26 +39,38 @@
       event.preventDefault();
       
       var player_url = $(this).serialize();
+      var url = $(this).attr("action");
 
-      var posting = $.post('/players', player_url);
+      var posting = $.post(url, player_url);
 
       posting.done(function(data){
         $("#playerResult").show();
 
+        newPlayer = new Player(data.player);
+        newPlayer.setInfo();
+
         $("#status").text("Successfully added " + data.player.name);
-        $("#score").text('Score: ' + data.player.score);
-        $("#salary").text('Salary: $' + data.player.salary.toLocaleString());
-        $("#value").text('Score Per Million: ' + data.player.value);
-
-        $("#points").text(data.player.points);
-        $("#assists").text(data.player.assists);
-        $("#rebounds").text(data.player.rebounds);
-        $("#blocks").text(data.player.blocks);
-        $("#steals").text(data.player.steals);
-        $("#games_played").text(data.player.games_played);
-
         $("#playerUrl").val("");
       })
     });
+
+    function Player(info){
+      for(var key in info){
+        this[key] = info[key];
+      }
+    };
+
+    Player.prototype.setInfo = function(){
+        $("#score").text('Score: ' + this.score);
+        $("#salary").text('Salary: $' + this.salary.toLocaleString());
+        $("#value").text('Score Per Million: ' + this.value);
+
+        $("#points").text(this.points);
+        $("#assists").text(this.assists);
+        $("#rebounds").text(this.rebounds);
+        $("#blocks").text(this.blocks);
+        $("#steals").text(this.steals);
+        $("#games_played").text(this.games_played);
+    }
   });
 </script>

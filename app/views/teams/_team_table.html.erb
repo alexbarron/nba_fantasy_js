@@ -16,12 +16,14 @@
   function loadRoster(){
     $(".js-roster").on("click", function() {
       var id = $(this).data("id");
+      var url = this.href + '.json';
 
-      $.get('/teams/' + id + '.json', function(data){
-        currentRoster = new Roster(data["team"], data["team"]["players"]);
-        $('#rosterCell-' + id).html(currentRoster.makeHTML());
-        hideRoster();
-      })
+      $.get(url)
+        .done(function(data){
+          currentRoster = new Roster(data["team"], data["team"]["players"]);
+          $('a[data-id="' + id + '"]').parent().html(currentRoster.makeHTML());
+          hideRoster();
+        })
     });
   };
 
@@ -35,14 +37,14 @@
     $.each(this.players, function(i, player){
       rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
     });
-    rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + this.team.id + '">Hide Roster</a>';
+    rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-remote="true" data-id="' + this.team.id + '">Hide Roster</a>';
     return rosterHTML;
   };
 
   function hideRoster(){
     $(".js-hide-roster").on("click", function() {
       var id = $(this).data("id");
-      $('#rosterCell-' + id).html('<a href="#" class="js-roster btn btn-primary btn-xs" data-id="' + id + '">See Roster</a>');
+      $('a[data-id="' + id + '"]').parent().html('<a href="#" class="js-roster btn btn-primary btn-xs" data-remote="true" data-id="' + id + '">See Roster</a>');
       loadRoster();
     });
   };
