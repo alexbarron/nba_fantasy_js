@@ -12,7 +12,6 @@
 
 <script type="text/javascript">
   $(document).ready(loadRoster);
-  $(document).on('page:load', loadRoster);
 
   function loadRoster(){
     $(".js-roster").on("click", function() {
@@ -20,15 +19,19 @@
 
       $.get('/teams/' + id + '.json', function(data){
         var players = data["team"]["players"];
-        var rosterHTML = '<ol>'
-        $.each(players, function(i, player){
-          rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
-        })
-        rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + id + '">Hide Roster</a>';
-        $('#rosterCell-' + id).html(rosterHTML);
+        $('#rosterCell-' + id).html(makeRosterHTML(id, players));
         hideRoster();
       })
     });
+  };
+
+  function makeRosterHTML(id, roster){
+    var rosterHTML = '<ol>'
+    $.each(roster, function(i, player){
+      rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
+    });
+    rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + id + '">Hide Roster</a>';
+    return rosterHTML;
   };
 
   function hideRoster(){
