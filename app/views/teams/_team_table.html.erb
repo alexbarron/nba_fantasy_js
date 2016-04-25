@@ -19,18 +19,24 @@
 
       $.get('/teams/' + id + '.json', function(data){
         var players = data["team"]["players"];
-        $('#rosterCell-' + id).html(makeRosterHTML(id, players));
+        currentRoster = new Roster(data["team"], data["team"]["players"]);
+        $('#rosterCell-' + id).html(currentRoster.makeHTML());
         hideRoster();
       })
     });
   };
 
-  function makeRosterHTML(id, roster){
+  function Roster(team, players){
+    this.team = team;
+    this.players = players;
+  }
+
+  Roster.prototype.makeHTML = function(){
     var rosterHTML = '<ol>'
-    $.each(roster, function(i, player){
+    $.each(this.players, function(i, player){
       rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
     });
-    rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + id + '">Hide Roster</a>';
+    rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-id="' + this.team.id + '">Hide Roster</a>';
     return rosterHTML;
   };
 
