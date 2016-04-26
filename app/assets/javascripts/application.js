@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require handlebars
 //= require Chart
 //= require excanvas
 //= require turbolinks

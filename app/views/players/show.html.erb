@@ -1,4 +1,3 @@
-
 <%= link_to "Load Previous Player", player_path(@player.prev || 0), :class => "js-previous-player btn btn-primary", remote: true, :data => {:id => @player.prev ? @player.prev.id : 0} %>
 <%= link_to "Load Next Player", player_path(@player.next || 0), :class => "js-next-player btn btn-primary", remote: true, :data => {:id => @player.next ? @player.next.id : 0} %>
 

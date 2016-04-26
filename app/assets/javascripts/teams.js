@@ -20,12 +20,13 @@ function Roster(team, players){
 }
 
 Roster.prototype.makeHTML = function(){
-  var rosterHTML = '<ol>'
-  $.each(this.players, function(i, player){
-    rosterHTML += '<li><a href="/players/' + player.id + '">' +  player.name + '</li>';
-  });
-  rosterHTML += '</ol><a href="#" class="js-hide-roster btn btn-primary btn-xs" data-remote="true" data-id="' + this.team.id + '">Hide Roster</a>';
-  return rosterHTML;
+  var source = '<ol>{{#this.players}}' +
+                  '<li><a href="/players/{{id}}">{{name}}</a></li>' +
+                '{{/this.players}}</ol>' +
+                '<a href="#" class="js-hide-roster btn btn-primary btn-xs" data-remote="true" data-id="{{this.team.id}}">Hide Roster</a>';
+  var template = Handlebars.compile(source);
+  var result = template(this);
+  return result;
 };
 
 function hideRoster(){
