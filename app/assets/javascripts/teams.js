@@ -25,8 +25,7 @@ Roster.prototype.makeHTML = function(){
                 '{{/this.players}}</ol>' +
                 '<a href="#" class="js-hide-roster btn btn-primary btn-xs" data-remote="true" data-id="{{this.team.id}}">Hide Roster</a>';
   var template = Handlebars.compile(source);
-  var result = template(this);
-  return result;
+  return template(this);
 };
 
 function hideRoster(){
